@@ -1,11 +1,13 @@
 ﻿using LambdaTaskListWebAPI.Models;
+using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LambdaTaskListWebAPI.Interface
 {
     public interface ITaskListService
     {
-        Dictionary<string, bool> GetItemsTaskList();
-        void AddItemToTaskList(TaskListModel taskList);
-        void RemoveItem(string name);
+        Task<Dictionary<string, bool>> GetItemsTaskList();
+        Task AddItemTaskList(TaskListModel taskList);
+        Task RemoveItem(string name);
     }
 }

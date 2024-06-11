@@ -2,6 +2,7 @@
 using LambdaTaskListWebAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LambdaTaskListWebAPI.Controllers
 {
@@ -17,23 +18,23 @@ namespace LambdaTaskListWebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetItemsTaskList()
+        public async Task<IActionResult> GetItemsTaskList()
         {
-            var result = _taskListService.GetItemsTaskList();
-            return Ok(result);
+            var items = await _taskListService.GetItemsTaskList();
+            return Ok(items);
         }
 
         [HttpPost]
-        public IActionResult AddItemToTaskList([FromBody] TaskListModel taskList)
+        public async Task<IActionResult> Post([FromBody] TaskListModel taskList)
         {
-            _taskListService.AddItemToTaskList(taskList);
+            await _taskListService.AddItemTaskList(taskList);
             return Ok();
         }
 
-        [HttpDelete]
-        public IActionResult RemoveItem([FromQuery] TaskListModel taskList)
+        [HttpDelete("{name}")]
+        public async Task<IActionResult> Delete(string name)
         {
-            _taskListService.RemoveItem(taskList.Name!);
+            await _taskListService.RemoveItem(name);
             return Ok();
         }
     }
